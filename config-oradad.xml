@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+   <!-- If enabled, get current domain controller by DC Locator (DsGetDcName). -->
+   <autoGetDomain>1</autoGetDomain>
+
+   <!-- If enabled, get all whitin forest trusts by DC Locator (DsEnumerateDomainTrusts).
+   If autoGetDomain is disabled, this option is ignored and disabled. -->
+   <autoGetTrusts>1</autoGetTrusts>
+
+   <!-- Global credentials for all requests. Can be overwritted below. -->
+   <username></username>                  <!-- Empty for implicit authentication -->
+   <userdomain></userdomain>
+   <userpassword></userpassword>
+
+   <!-- Set explicit domain list, one by domain in forest.
+   For each domain, set server (preferred option) OR domainName.
+   If autoGetTrusts are enabled, this list is ignored.
+   If no credentials are specifed, global credentials are used. -->
+   <domains>
+      <!--
+      port: empty for default LDAP port
+      username: empty for implicit authentication, not present for global credentials
+      <domain>
+         <server></server>
+         <port></port>
+         <domainName></domainName>
+         <username></username>
+         <userdomain></userdomain>
+         <userpassword></userpassword>
+      </domain>
+      -->
+   </domains>
+
+   <level>4</level>
+   <!--
+   This flag (confidential), together with the limit attributes in oradad-schema.xml, controls whether AD attributes defined as confidential are fetched.
+   If set to: 0 (default), confidential attributes are not fetched, except if limit is defined in which case they are fetched up to the limit.
+              1, confidential attributes are fetched (up to the limit if any).
+              2, confidential attributes are fetched with no limit.
+   -->
+   <confidential>0</confidential>
+   <process_sysvol>1</process_sysvol>                  <!-- Process domains sysvol -->
+   <sysvol_filter>*\GPT.INI;*\GPE.INI;*\comment.cmtx;*\Registry.pol;*\GptTmpl.inf;*\audit.csv;*\scripts.ini;*\psscripts.ini;*\*.aas;*\ScheduledTasks.xml;*\Groups.xml;*\Registry.xml;*\InternetSettings.xml;*\Shortcuts.xml;*\Devices.xml;*\EnvironmentVariables.xml;*\FolderOptions.xml;*\Services.xml;*\*.cmd;*\*.bat;*\*.vbs;*\*.vbe;*\*.ps1;*\*.reg</sysvol_filter>  <!-- Files to collect from sysvol -->
+   <sleepTime>0</sleepTime>
+
+   <outputFiles>0</outputFiles>                        <!-- Enable output cleartext files -->
+   <outputMLA>1</outputMLA>                            <!-- Enable output encrypted MLA archive -->
+   <!--
+   <additionalMLAKeys><![CDATA[...]]></additionalMLAKeys>
+   Use `mlar keygen key` to generate keys. In the example below, replace `_` by `-`.
+   <additionalMLAKeys><![CDATA[_____BEGIN PUBLIC KEY_____MCowBQYDK2VuAyEACRCMlZICgUa8+GNq3K8QoYV3dRpXHZDeK+e6Uu0TPVs=_____END PUBLIC KEY_____]]></additionalMLAKeys>
+   -->
+</config>
